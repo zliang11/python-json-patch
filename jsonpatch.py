@@ -762,6 +762,20 @@ class DiffBuilder(object):
                     }, pointer_cls=self.pointer_cls).operation
                     curr = curr[1][1]
                     continue
+                if op_first.location == op_second.location and \
+                        type(op_first) == RemoveOperation and \
+                        type(op_second) == MoveOperation:
+                    yield ReplaceOperation({
+                        'op': 'replace',
+                        'path':op_second.location,
+                        'value': op_second.operation['value'],
+                    },pointer_cls=self.pointer_cls).operation
+                    yield RemoveOperation({
+                        'op':'remove',
+                        'path': op_second.operation['from'],
+                    }pointer_cls=self.pointer_cls).operation
+                    curr = curr[1][1]
+                    continue
 
             yield curr[2].operation
             curr = curr[1]
