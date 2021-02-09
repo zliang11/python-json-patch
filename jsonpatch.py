@@ -794,6 +794,7 @@ class DiffBuilder(object):
                     'op': 'move',
                     'from': op.location,
                     'path': _path_join(path, key),
+                    'value':item,
                 }, pointer_cls=self.pointer_cls)
                 self.insert(new_op)
         else:
@@ -824,6 +825,7 @@ class DiffBuilder(object):
                     'op': 'move',
                     'from': new_op.location,
                     'path': op.location,
+                    'value':item,
                 }, pointer_cls=self.pointer_cls)
                 new_index[2] = new_op
 
